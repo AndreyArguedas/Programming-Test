@@ -94,17 +94,23 @@ function CalendarGenerator(actDate,g){
         		}
         		this.actDate.setDate(this.actDate.getDate() + parseInt(1));
         	}
-        	this.printCalendar();
+        	this.printCalendar(actMonth);
         	this.restartCalendar();
         	this.actualRow = 1;
         }
 	}
 
-	this.printCalendar = function(){
+	this.printCalendar = function(i){
 
 		var tablesDiv = document.getElementById("tablesDiv");
 		var table = document.createElement('TABLE');
     	table.border='1';
+
+		var p = document.createElement('P');
+		p.style = "font-size:32px";
+		p.appendChild(document.createTextNode(this.monthToString(i)));
+		tablesDiv.appendChild(p);
+
     	var tableBody = document.createElement('TBODY');
     	table.appendChild(tableBody); 
 
@@ -147,5 +153,12 @@ function CalendarGenerator(actDate,g){
 
 	this.dayToString = function(index){
 		return ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][index];
+	}
+
+	this.monthToString = function(index){
+		return ["January", "February", "March", "April", "May", "June",
+  						"July", "August", "September", "October", "November", "December"]
+  						[index];
+
 	}
 }
