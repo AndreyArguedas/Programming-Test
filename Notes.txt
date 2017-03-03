@@ -1,0 +1,5 @@
+A. I could not implement the communication with the API.
+
+B. About the main program i did not detect any bug
+
+c. I would work on the holidays visualization and connection to the API.
