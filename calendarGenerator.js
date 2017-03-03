@@ -1,6 +1,6 @@
 function CalendarGenerator(actDate,g){
 	var fd = actDate.split("-");
-	this.actDate = new Date(fd[1] +","+ fd[2] +","+ fd[0]);
+	this.actDate = new Date(fd[1] +","+ fd[2] +","+ fd[0]); //Parsing date
 	this.goalDate = g;
 
 	this.calendar = [
@@ -12,7 +12,7 @@ function CalendarGenerator(actDate,g){
 					["-","-","-","-","-","-","-"],
 					];
 
-	this.actualRow = 1;
+	this.actualRow = 1; //A var for controlling the graphic table
 
 	this.generate = function(){ //Main function of the program
 		var goal = new Date();
@@ -26,12 +26,12 @@ function CalendarGenerator(actDate,g){
 
         while(Date.parse(this.actDate) < Date.parse(goal)){
         	var actMonth = this.actDate.getMonth();
-        	while(this.actDate.getMonth() === actMonth){
-        		switch(this.dayToString(this.actDate.getDay)){
+        	while(Date.parse(this.actDate) < Date.parse(goal) && this.actDate.getMonth() === actMonth){
+        		switch(this.dayToString(this.actDate.getDay())){
         			case "Sunday":
         				for(var i = this.actualRow; i < 6; i++){
-        					if(calendar[i][0] === "-"){
-        						calendar[i][0] = this.actDate.getDate();
+        					if(this.calendar[i][0] === "-"){
+        						this.calendar[i][0] = this.actDate.getDate();
         						break;
         					}
         				}
@@ -39,8 +39,8 @@ function CalendarGenerator(actDate,g){
 
         			case "Monday":
         				for(var i = this.actualRow; i < 6; i++){
-        					if(calendar[i][1] === "-"){
-        						calendar[i][1] = this.actDate.getDate();
+        					if(this.calendar[i][1] === "-"){
+        						this.calendar[i][1] = this.actDate.getDate();
         						break;
         					}
         				}
@@ -48,8 +48,8 @@ function CalendarGenerator(actDate,g){
 
         			case "Tuesday":
         				for(var i = this.actualRow; i < 6; i++){
-        					if(calendar[i][2] === "-"){
-        						calendar[i][2] = this.actDate.getDate();
+        					if(this.calendar[i][2] === "-"){
+        						this.calendar[i][2] = this.actDate.getDate();
         						break;
         					}
         				}
@@ -57,8 +57,8 @@ function CalendarGenerator(actDate,g){
 
         			case "Wednesday":
         				for(var i = this.actualRow; i < 6; i++){
-        					if(calendar[i][3] === "-"){
-        						calendar[i][3] = this.actDate.getDate();
+        					if(this.calendar[i][3] === "-"){
+        						this.calendar[i][3] = this.actDate.getDate();
         						break;
         					}
         				}
@@ -66,8 +66,8 @@ function CalendarGenerator(actDate,g){
 
         			case "Thursday":
         				for(var i = this.actualRow; i < 6; i++){
-        					if(calendar[i][4] === "-"){
-        						calendar[i][4] = this.actDate.getDate();
+        					if(this.calendar[i][4] === "-"){
+        						this.calendar[i][4] = this.actDate.getDate();
         						break;
         					}
         				}
@@ -75,8 +75,8 @@ function CalendarGenerator(actDate,g){
 
         			case "Friday":
         				for(var i = this.actualRow; i < 6; i++){
-        					if(calendar[i][5] === "-"){
-        						calendar[i][5] = this.actDate.getDate();
+        					if(this.calendar[i][5] === "-"){
+        						this.calendar[i][5] = this.actDate.getDate();
         						break;
         					}
         				}
@@ -84,9 +84,9 @@ function CalendarGenerator(actDate,g){
 
         			case "Saturday":
         				for(var i = this.actualRow; i < 6; i++){
-        					if(calendar[i][6] === "-"){
+        					if(this.calendar[i][6] === "-"){
         						this.actualRow++;
-        						calendar[i][6] = this.actDate.getDate();
+        						this.calendar[i][6] = this.actDate.getDate();
         						break;
         					}
         				}
@@ -95,6 +95,7 @@ function CalendarGenerator(actDate,g){
         		this.actDate.setDate(this.actDate.getDate() + parseInt(1));
         	}
         	this.printCalendar();
+        	this.restartCalendar();
         	this.actualRow = 1;
         }
 	}
@@ -116,17 +117,32 @@ function CalendarGenerator(actDate,g){
            		if(i == 0)
            			td.appendChild(document.createTextNode(this.calendar[i][j].charAt(0)));
            		else{
-           			td.style = "background-color:gray";
-           			if(j === 0 || j === 6 && this.calendar[i][j] !== "-")
-           				td.style = "background-color:yellow";
-           			else
-           				if(this.calendar[i][j] !== "-")
+           			if(this.calendar[i][j] === "-")
+           				td.style = "background-color:gray";
+           			else{
+           				td.appendChild(document.createTextNode(this.calendar[i][j]));
+           				if(j === 0 || j === 6)
+           					td.style = "background-color:yellow";
+           				else
            					td.style = "background-color:green";
+           			}
+           			
            		}
            		tr.appendChild(td);
 			}
 		}
 		tablesDiv.appendChild(table);
+	}
+
+	this.restartCalendar = function(){
+		this.calendar = [
+					["Su","M","Tu","W","Th","F","Sa"],
+					["-","-","-","-","-","-","-"],
+					["-","-","-","-","-","-","-"],
+					["-","-","-","-","-","-","-"],
+					["-","-","-","-","-","-","-"],
+					["-","-","-","-","-","-","-"],
+					];
 	}
 
 	this.dayToString = function(index){
