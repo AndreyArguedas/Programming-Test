@@ -27,6 +27,7 @@ function validateCountry(){
 
 function validate(){
 	if(validateDate() && validateDays() && validateCountry()){
-		return true;
+		var g = new CalendarGenerator(document.getElementById("date").value,document.getElementById("days").value);
+		g.printCalendar();
 	}
 }
