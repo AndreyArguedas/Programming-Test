@@ -28,6 +28,6 @@ function validateCountry(){
 function validate(){
 	if(validateDate() && validateDays() && validateCountry()){
 		var g = new CalendarGenerator(document.getElementById("date").value,document.getElementById("days").value);
-		g.printCalendar();
+		g.generate();
 	}
 }
